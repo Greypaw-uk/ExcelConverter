@@ -2,6 +2,7 @@
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -291,7 +292,7 @@ namespace Excel_Converter
 
 
 
-                    switch(YGValue)
+                    switch (YGValue)
                     {
                         case 0:
 
@@ -301,7 +302,7 @@ namespace Excel_Converter
                             sp2Cell = "J";
                             su1Cell = "K";
                             su2Cell = "L";
-                            
+
                             break;
 
                         case 1:
@@ -409,6 +410,39 @@ namespace Excel_Converter
             else
             {
                 MessageBox.Show("Please ensure all the Summatives are filled in the Preferences tab.");
+            }
+        }
+
+        private void ConvertData(object sender, RoutedEventArgs e)
+        {
+            string line;
+            string path = "dictionary.txt";
+
+            Dictionary<string, string> ConvertDic = new Dictionary<string, string>();
+
+
+            if(!File.Exists(path))
+            {
+                StreamWriter createFile = File.CreateText(path);
+            }
+            else
+            {
+                var array = File.ReadAllLines(path);
+
+                for(var i = 0; i < array.Length; i++)
+                {
+                    ConvertDic.Add(array[i, 0], array[i, 1]);
+                }
+            }
+
+            foreach(KeyValuePair <string,string> thing in ConvertDic)
+            {
+                Console.WriteLine(thing);
+            }
+
+            foreach (var pupil in Subject)
+            {
+
             }
         }
     }

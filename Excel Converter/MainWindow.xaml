@@ -13,16 +13,17 @@
 
                         <Grid Height="Auto" Width="Auto" Grid.ColumnSpan="2">
                             <Button x:Name="btnImportFile" Content="Import File" Click="ImportAFile" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,10,0,0" Height="24"/>
-                            <Button x:Name="btnExportFile" Content="Export" Click="ExportToMag" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="90,10,0,0" Height="24"/>
+                            <Button x:Name="btnConvert" Content="Convert" Click="ConvertData" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="90,10,0,0" Height="24"/>
+                            <Button x:Name="btnExportFile" Content="Export" Click="ExportToMag" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="170,10,0,0" Height="24"/>
 
-                            <ComboBox x:Name="DataSetPicker" SelectedIndex="0" Margin="192,10,442,44">
+                            <ComboBox x:Name="DataSetPicker" SelectedIndex="0" Margin="284,10,350,44">
                                 <ComboBoxItem Content="Reading"/>
                                 <ComboBoxItem Content="Writing"/>
                                 <ComboBoxItem Content="Maths"/>
                                 <ComboBoxItem Content="EGPS"/>
                             </ComboBox>
 
-                            <ComboBox x:Name="YGPicker" SelectedIndex="0" IsEditable="False" HorizontalAlignment="Left" Margin="365,10,0,0" VerticalAlignment="Top" Width="60" Height="24">
+                            <ComboBox x:Name="YGPicker" SelectedIndex="0" IsEditable="False" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="60" Height="24">
                                 <ComboBoxItem Content="Y1"/>
                                 <ComboBoxItem Content="Y2"/>
                                 <ComboBoxItem Content="Y3"/>
