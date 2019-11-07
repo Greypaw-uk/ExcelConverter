@@ -3,7 +3,7 @@
 namespace Excel_Converter
 {
     public class FileContents : INotifyPropertyChanged
-    {
+    { 
         private string _pupilName;
          public string pupilName
         {
@@ -33,7 +33,7 @@ namespace Excel_Converter
             set
             {
                 _au2 = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("au1"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("au2"));
             }
         }
 
@@ -44,7 +44,7 @@ namespace Excel_Converter
             set
             {
                 _sp1 = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("au1"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("sp1"));
             }
         }
 
@@ -55,7 +55,7 @@ namespace Excel_Converter
             set
             {
                 _sp2 = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("au1"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("sp2"));
             }
         }
 
@@ -66,7 +66,7 @@ namespace Excel_Converter
             set
             {
                 _su1 = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("au1"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("su1"));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Excel_Converter
             set
             {
                 _su2 = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("au1"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("su2"));
             }
         }
 

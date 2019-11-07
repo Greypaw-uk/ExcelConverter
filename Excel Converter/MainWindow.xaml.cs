@@ -1,13 +1,14 @@
 ﻿using CsvHelper;
 using Microsoft.Office.Interop.Excel;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using static Excel_Converter.MainWindowDataContext;
 using Excel = Microsoft.Office.Interop.Excel;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Excel_Converter
 {
@@ -15,9 +16,10 @@ namespace Excel_Converter
     {
         public string fileName = string.Empty;
         public bool fileFormattedCorrectly;
+        public Popup popup = new Popup();
 
         MainWindowDataContext context = new MainWindowDataContext();
-
+        Dictionary<string, string> ConvertDic = new Dictionary<string, string>();
 
         public MainWindow()
         {
@@ -29,7 +31,7 @@ namespace Excel_Converter
 
         private void ImportAFile(object sender, RoutedEventArgs e)
         {
-            var DialogBox = new OpenFileDialog
+            var DialogBox = new Microsoft.Win32.OpenFileDialog
             {
                 //InitialDirectory = "C:\\Users\\John Scholey\\Downloads\\",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),
@@ -170,7 +172,7 @@ namespace Excel_Converter
                             }
 
                             // Split O'Track data into chunks to display back correct subject
-                            var subjectPicker = DataSetPicker.SelectedIndex;
+                            var subjectPicker = popup.DataSetPicker.SelectedIndex;
                             var counter = 0;
                             var key = CSVFileContents[0].pupilName;
 
@@ -262,9 +264,9 @@ namespace Excel_Converter
             string su1Cell = string.Empty;
             string su2Cell = string.Empty;
 
-            var YGValue = YGPicker.SelectedIndex;
+            var YGValue = popup.YGPicker.SelectedIndex;
 
-            var DialogBox = new OpenFileDialog
+            var DialogBox = new Microsoft.Win32.OpenFileDialog
             {
                 InitialDirectory = "C:\\Users\\John Scholey\\Downloads\\",
                 Filter = "xls file (*.xls)|*.xls",
@@ -383,67 +385,101 @@ namespace Excel_Converter
             }
         }
 
-
-        private void Check(object sender, RoutedEventArgs e)
+        private void OpenPopup(object sender, RoutedEventArgs e)
         {
-            var sum = new Summatives();
-            var yg = YGPicker.Text;
+            popup.ShowDialog();
+        }
 
-            if (!String.IsNullOrWhiteSpace(tbEm.Text) && !String.IsNullOrWhiteSpace(tbDev.Text)
-                && !String.IsNullOrWhiteSpace(tbSec.Text) && !String.IsNullOrWhiteSpace(tbGD.Text))
+
+        public void ConvertData()
+        {
+            string path = "dictionary.txt";
+            string[] readFile;
+
+            try
             {
-                sum.emerging = yg + " " + tbEm.Text;
-                sum.developing = yg + " " + tbDev.Text;
-                sum.secure = yg + " " + tbSec.Text;
-                sum.greaterDepth = yg + " " + tbGD.Text;
-
-                Console.WriteLine(sum.emerging + "\n" + sum.developing + "\n" + sum.secure + "\n" + sum.greaterDepth);
-
-                foreach (var item in CSVFileContents)
+                if (!File.Exists(path))
                 {
-                    if (!item.Equals(sum.emerging) || !item.Equals(sum.developing) || !item.Equals(sum.secure) || !item.Equals(sum.greaterDepth))
-                    {
-                        Console.WriteLine(item.ToString());
-                    }
+                    // Create new blank dictionary.txt
+                    //TODO Populate newly created Dictionary File with sample values
+                    StreamWriter createFile = File.CreateText(path);
+                }
+
+                readFile = File.ReadAllLines(path);
+
+                foreach (var item in readFile)
+                {
+                    var key = item.Split(',')[0];
+                    var value = item.Split(',')[1];
+
+                    ConvertDic.Add(key, value);
+                }
+
+                foreach (var row in Subject)
+                {
+                    row.au1 = ConvertSubjectData(row.au1);
+                    row.au2 = ConvertSubjectData(row.au2);
+                    row.sp1 = ConvertSubjectData(row.sp1);
+                    row.sp2 = ConvertSubjectData(row.sp2);
+                    row.su1 = ConvertSubjectData(row.su1);
+                    row.su2 = ConvertSubjectData(row.su2);
                 }
             }
-            else
+            catch (Exception Error)
             {
-                MessageBox.Show("Please ensure all the Summatives are filled in the Preferences tab.");
+                MessageBox.Show(Error.Message);
             }
         }
 
-        private void ConvertData(object sender, RoutedEventArgs e)
+
+        private string ConvertSubjectData(string term)
         {
-            string line;
-            string path = "dictionary.txt";
+            string convertedString = "";
 
-            Dictionary<string, string> ConvertDic = new Dictionary<string, string>();
-
-
-            if(!File.Exists(path))
+            if (!String.IsNullOrWhiteSpace(term))
             {
-                StreamWriter createFile = File.CreateText(path);
-            }
-            else
-            {
-                var array = File.ReadAllLines(path);
-
-                for(var i = 0; i < array.Length; i++)
+                //Ignore SEN data
+                if (!term.Contains("P"))
                 {
-                    ConvertDic.Add(array[i, 0], array[i, 1]);
+                    //Remove dashes from data
+                    if (term.Equals("-"))
+                    {
+                        convertedString = "";
+                        return convertedString;
+                    }
+                    else
+                    {
+                        //If no digit - prefix with YGPicker
+                        if (!term.Any(c => char.IsDigit(c)))
+                        {
+                            term = popup.YGPicker.Text + " " + term;
+                        }
+
+                        //Amend data entries with digits
+                        else if (term.Any(c => char.IsDigit(c)))
+                        {
+                            term = term.Insert(0, "Y");
+                            term = term.Insert(2, " ");
+                        }
+
+                        //Convert codes to value in Dictionary
+                        foreach (var entry in ConvertDic)
+                        {
+                            if (term.Contains(entry.Key))
+                            {
+                                convertedString = term.Remove(3);
+                                convertedString = convertedString.Insert(3, entry.Value);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    return term;
                 }
             }
 
-            foreach(KeyValuePair <string,string> thing in ConvertDic)
-            {
-                Console.WriteLine(thing);
-            }
-
-            foreach (var pupil in Subject)
-            {
-
-            }
+            return convertedString;
         }
     }
 }

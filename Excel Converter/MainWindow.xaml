@@ -6,70 +6,29 @@
         mc:Ignorable="d"
         Title="EMAG File Converter" Height="485.21" Width="800">
     <Grid>
-        <Grid>
-            <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top" Width="auto">
-                <TabItem Header="General">
-                    <Grid Background="#FFE5E5E5" Margin="-3,-2,-13,-13" RenderTransformOrigin="0.498,1.171">
-
-                        <Grid Height="Auto" Width="Auto" Grid.ColumnSpan="2">
-                            <Button x:Name="btnImportFile" Content="Import File" Click="ImportAFile" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,10,0,0" Height="24"/>
-                            <Button x:Name="btnConvert" Content="Convert" Click="ConvertData" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="90,10,0,0" Height="24"/>
-                            <Button x:Name="btnExportFile" Content="Export" Click="ExportToMag" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="170,10,0,0" Height="24"/>
-
-                            <ComboBox x:Name="DataSetPicker" SelectedIndex="0" Margin="284,10,350,44">
-                                <ComboBoxItem Content="Reading"/>
-                                <ComboBoxItem Content="Writing"/>
-                                <ComboBoxItem Content="Maths"/>
-                                <ComboBoxItem Content="EGPS"/>
-                            </ComboBox>
-
-                            <ComboBox x:Name="YGPicker" SelectedIndex="0" IsEditable="False" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="60" Height="24">
-                                <ComboBoxItem Content="Y1"/>
-                                <ComboBoxItem Content="Y2"/>
-                                <ComboBoxItem Content="Y3"/>
-                                <ComboBoxItem Content="Y4"/>
-                                <ComboBoxItem Content="Y5"/>
-                                <ComboBoxItem Content="Y6"/>
-                            </ComboBox>
-                        </Grid>
-
-                        <Grid Height="Auto" Width="Auto" Grid.ColumnSpan="2">
-                            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=Subject}" Name="DataGridView1" Margin="10,42,10,10" Height="Auto" Width="Auto">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Name" Width="3*" Binding="{Binding pupilName}"/>
-                                    <DataGridTextColumn Header="Au 1" Width="1*" Binding="{Binding au1}"/>
-                                    <DataGridTextColumn Header="Au 2" Width="1*" Binding="{Binding au2}"/>
-                                    <DataGridTextColumn Header="Sp 1" Width="1*" Binding="{Binding sp1}"/>
-                                    <DataGridTextColumn Header="Sp 2" Width="1*" Binding="{Binding sp2}"/>
-                                    <DataGridTextColumn Header="Su 1" Width="1*" Binding="{Binding su1}"/>
-                                    <DataGridTextColumn Header="Su 2" Width="1*" Binding="{Binding su2}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-
-                    </Grid>
-                </TabItem>
+        <Grid Height="Auto" Width="Auto" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="41*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="344*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnImportFile" Content="Import File" Click="ImportAFile" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,10,0,0" Height="24" Grid.ColumnSpan="2"/>
+            <Button x:Name="btnConvert" Content="Convert" Click="OpenPopup" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="8,10,0,0" Height="24" Grid.ColumnSpan="2" Grid.Column="1"/>
+            <Button x:Name="btnExportFile" Content="Export" Click="ExportToMag" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="70,10,0,0" Height="24" Grid.Column="2"/>
 
 
-                <TabItem Header="Preferences">
-                    <Grid Background="#FFE5E5E5">
-
-                        <Rectangle Margin="10,10,632,220" Fill="White"/>
-                        <Label Content="Summative Settings" HorizontalAlignment="Center" VerticalAlignment="Top" Height="28" Margin="9,16,631,0" Width="125" Grid.Column="1" Grid.ColumnSpan="2"/>
-                        <Label Content="Emerging" Height="30" Margin="9,49,696,337" Grid.Column="1" Grid.ColumnSpan="2"/>
-                        <Label Content="Developing" Height="30" Margin="9,84,682,302" Grid.Column="1" Grid.ColumnSpan="2"/>
-                        <Label Content="Secure" Height="30" Width="50" Margin="9,119,706,267" Grid.Column="1" Grid.ColumnSpan="2"/>
-                        <Label Content="GD" Margin="0,154,698,232" Height="30" Width="50" Grid.Column="2"/>
-
-                        <TextBox x:Name="tbEm" Text="{Binding Path=emerging, Mode=TwoWay}" TextAlignment="Center"  HorizontalAlignment="Left" Height="30" Margin="76.5,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" Grid.Column="2"/>
-                        <TextBox x:Name="tbDev" Text="{Binding Path=developing, Mode=TwoWay}" TextAlignment="Center" HorizontalAlignment="Left" Height="30" Margin="76.5,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" Grid.Column="2"/>
-                        <TextBox x:Name="tbSec" Text="{Binding Path=secure, Mode=TwoWay}" TextAlignment="Center" HorizontalAlignment="Left" Height="30" Margin="76.5,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" Grid.Column="2"/>
-                        <TextBox x:Name="tbGD" Text="{Binding Path=greaterDepth, Mode=TwoWay}" TextAlignment="Center" HorizontalAlignment="Left" Height="30" Margin="76.5,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" Grid.Column="2"/>
-
-                        <Button Content="Check" Click="Check" Height="30" Width="50" Margin="188.5,164,510,222" Grid.Column="2"/>
-                    </Grid>
-                </TabItem>
-            </TabControl>
         </Grid>
+
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=Subject}" Name="DataGridView1" Margin="10,49,10,10" Height="Auto" Width="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="3*" Binding="{Binding pupilName}"/>
+                <DataGridTextColumn Header="Au 1" Width="1*" Binding="{Binding au1}"/>
+                <DataGridTextColumn Header="Au 2" Width="1*" Binding="{Binding au2}"/>
+                <DataGridTextColumn Header="Sp 1" Width="1*" Binding="{Binding sp1}"/>
+                <DataGridTextColumn Header="Sp 2" Width="1*" Binding="{Binding sp2}"/>
+                <DataGridTextColumn Header="Su 1" Width="1*" Binding="{Binding su1}"/>
+                <DataGridTextColumn Header="Su 2" Width="1*" Binding="{Binding su2}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
