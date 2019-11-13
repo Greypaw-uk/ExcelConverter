@@ -18,6 +18,8 @@ namespace Excel_Converter
         public bool fileFormattedCorrectly;
         public Popup popup = new Popup();
 
+        public string YearGroup;
+
         MainWindowDataContext context = new MainWindowDataContext();
         Dictionary<string, string> ConvertDic = new Dictionary<string, string>();
 
@@ -33,7 +35,6 @@ namespace Excel_Converter
         {
             var DialogBox = new Microsoft.Win32.OpenFileDialog
             {
-                //InitialDirectory = "C:\\Users\\John Scholey\\Downloads\\",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),
                 Filter = "csv file (*.csv)|*.csv",
                 FilterIndex = 2,
@@ -61,10 +62,10 @@ namespace Excel_Converter
 
 
                     // Inject headers into CSV file
-                    xlWorkSheet.Rows["1:9"].Delete();
+                    //xlWorkSheet.Rows["1:9"].Delete();
 
                     xlWorkSheet.Cells[1, 1] = "name";
-                    xlWorkSheet.Rows["2:3"].Delete();
+                    //xlWorkSheet.Rows["2:3"].Delete();
 
                     xlWorkSheet.Cells[1, 13] = "au1";
                     xlWorkSheet.Cells[1, 16] = "au2";
@@ -76,6 +77,9 @@ namespace Excel_Converter
                     xlWorkSheet.Cells[1, 30] = "su2";
 
                     xlWorkSheet.SaveAs(fileName);
+
+                    btnConvert.Visibility = Visibility.Visible;
+                    btnExportFile.Visibility = Visibility.Visible;
                 }
                 catch (Exception error)
                 {
@@ -387,7 +391,15 @@ namespace Excel_Converter
 
         private void OpenPopup(object sender, RoutedEventArgs e)
         {
-            popup.ShowDialog();
+            try
+            {
+                popup.ShowDialog();
+            }
+            catch
+            {
+                MessageBox.Show("You cannot use this button twice.");
+            }
+
         }
 
 
@@ -402,8 +414,42 @@ namespace Excel_Converter
                 {
                     // Create new blank dictionary.txt
                     //TODO Populate newly created Dictionary File with sample values
-                    StreamWriter createFile = File.CreateText(path);
+                    StreamWriter txtFile = File.CreateText(path);
+
+                    List<String> dictionaryList = new List<String>
+                    {
+                        "Low, Em",
+                        "E, Em",
+                        "E+, Em+",
+                        "e, Em",
+                        "e+, Em+",
+                        "Emg, Em",
+                        "b, Em",
+                        "b+, Em+",
+                        "Mid, Dev",
+                        "d, Dev",
+                        "D, Dev",
+                        "d+, Dev+",
+                        "D+, Dev+",
+                        "S, Sec"
+                    };
+
+                    try
+                    {
+                        foreach (var line in dictionaryList)
+                        {
+                            txtFile.WriteLine(line);
+                        }
+
+                        txtFile.Close();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("The dictionary.txt file is missing and I couldn't create a new one.");
+                    }
+
                 }
+
 
                 readFile = File.ReadAllLines(path);
 
@@ -436,6 +482,14 @@ namespace Excel_Converter
         {
             string convertedString = "";
 
+            Summatives s = new Summatives
+            {
+                emerging = "Em",
+                developing = "Dev",
+                secure = "Sec",
+                greaterDepth = "GD"
+            };
+
             if (!String.IsNullOrWhiteSpace(term))
             {
                 //Ignore SEN data
@@ -447,12 +501,13 @@ namespace Excel_Converter
                         convertedString = "";
                         return convertedString;
                     }
+
                     else
                     {
                         //If no digit - prefix with YGPicker
                         if (!term.Any(c => char.IsDigit(c)))
                         {
-                            term = popup.YGPicker.Text + " " + term;
+                            term = YearGroup + " " + term;
                         }
 
                         //Amend data entries with digits
@@ -473,6 +528,7 @@ namespace Excel_Converter
                         }
                     }
                 }
+
                 else
                 {
                     return term;

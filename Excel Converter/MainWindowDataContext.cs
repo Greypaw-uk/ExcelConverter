@@ -24,6 +24,22 @@ namespace Excel_Converter
     }
 
 
+    public class YearGroup
+    {
+        private string _selectedYearGroup;
+        public string selectedYearGroup
+        {
+            get { return _selectedYearGroup; }
+            set
+            {
+                _selectedYearGroup = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("selectedYearGroup"));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
+
     public class Summatives
     {
         private string _emerging;

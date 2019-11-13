@@ -12,14 +12,46 @@
                 <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="344*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnImportFile" Content="Import File" Click="ImportAFile" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,10,0,0" Height="24" Grid.ColumnSpan="2"/>
-            <Button x:Name="btnConvert" Content="Convert" Click="OpenPopup" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="8,10,0,0" Height="24" Grid.ColumnSpan="2" Grid.Column="1"/>
-            <Button x:Name="btnExportFile" Content="Export" Click="ExportToMag" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="70,10,0,0" Height="24" Grid.Column="2"/>
-
-
+            
+            <Button x:Name="btnImportFile" 
+                    Content="Import File" 
+                    Click="ImportAFile" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Width="75" 
+                    Margin="10,10,0,0" 
+                    Height="24" 
+                    Grid.ColumnSpan="2"/>
+            
+            <Button x:Name="btnConvert" 
+                    Content="Convert" 
+                    Click="OpenPopup" 
+                    Visibility="Hidden" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Width="75" Margin="8,10,0,0" 
+                    Height="24" 
+                    Grid.ColumnSpan="2" 
+                    Grid.Column="1"/>
+            
+            <Button x:Name="btnExportFile" 
+                    Content="Export" 
+                    Click="ExportToMag" 
+                    Visibility="Hidden" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Width="75" 
+                    Margin="70,10,0,0" 
+                    Height="24" 
+                    Grid.Column="2"/>
         </Grid>
 
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=Subject}" Name="DataGridView1" Margin="10,49,10,10" Height="Auto" Width="Auto">
+        <DataGrid AutoGenerateColumns="False" 
+                  ItemsSource="{Binding Path=Subject}" 
+                  Name="DataGridView1" 
+                  Margin="10,49,10,10" 
+                  Height="Auto" Width="Auto" 
+                  CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Width="3*" Binding="{Binding pupilName}"/>
                 <DataGridTextColumn Header="Au 1" Width="1*" Binding="{Binding au1}"/>

@@ -5,57 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Excel_Converter"
         mc:Ignorable="d"
-        Title="Confirmation" Height="400" Width="400" ResizeMode="NoResize">
+        Title="Confirmation" Height="200" Width="200" ResizeMode="NoResize">
 
-    <Grid Margin="20,20,20,137">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Grid>
+        <StackPanel>
+            <ComboBox x:Name="YGPicker" 
+                      SelectedValuePath="selectedYearGroup"
+                      SelectedIndex="0" 
+                      IsEditable="False" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Top" Width="75" 
+                      Height="25" Margin="0,20,0,0">
+                <ComboBoxItem Content="Y1"/>
+                <ComboBoxItem Content="Y2"/>
+                <ComboBoxItem Content="Y3"/>
+                <ComboBoxItem Content="Y4"/>
+                <ComboBoxItem Content="Y5"/>
+                <ComboBoxItem Content="Y6"/>
+            </ComboBox>
 
-        <Grid Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0">
-                <Label Name="txtEmerging"   Content="Emerging"      Margin="0,10,0,10"/>
-                <Label Name="txtDeveloping" Content="Developing"    Margin="0,10,0,10"/>
-                <Label Name="txtSecure"     Content="Secure"        Margin="0,10,0,10"/>
-                <Label Name="txtGD"         Content="Greater Depth" Margin="0,10,0,10"/>
-            </StackPanel>
+            <ComboBox x:Name="DataSetPicker" 
+                      SelectedIndex="0" 
+                      IsEditable="False" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Top" Width="75"
+                      Height="25" Margin="0,10,0,10" 
+                      Visibility="Collapsed">
+                <ComboBoxItem Content="Reading"/>
+                <ComboBoxItem Content="Writing"/>
+                <ComboBoxItem Content="Maths"/>
+                <ComboBoxItem Content="EGPS"/>
+            </ComboBox>
 
-            <StackPanel Grid.Column="2">
-                <TextBox Grid.Column="2" x:Name="tbEm"  Text="{Binding emerging, Mode=TwoWay}"      TextAlignment="Center" Height="30" Width="50" BorderThickness="1" Margin="0,10,0,10"/>
-                <TextBox Grid.Column="2" x:Name="tbDev" Text="{Binding developing, Mode=TwoWay}"    TextAlignment="Center" Height="30" Width="50" BorderThickness="1" Margin="0,10,0,10"/>
-                <TextBox Grid.Column="2" x:Name="tbSec" Text="{Binding secure, Mode=TwoWay}"        TextAlignment="Center" Height="30" Width="50" BorderThickness="1" Margin="0,10,0,10"/>
-                <TextBox Grid.Column="2" x:Name="tbGD"  Text="{Binding greaterDepth, Mode=TwoWay}"  TextAlignment="Center" Height="30" Width="50" BorderThickness="1" Margin="0,10,0,10"/>
-            </StackPanel>
-        </Grid>
-
-        <Grid Grid.Column="2">
-            <StackPanel>
-                <ComboBox Grid.Column="1" x:Name="YGPicker" SelectedIndex="0" IsEditable="False" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="25" Margin="0,10,0,10">
-                    <ComboBoxItem Content="Y1"/>
-                    <ComboBoxItem Content="Y2"/>
-                    <ComboBoxItem Content="Y3"/>
-                    <ComboBoxItem Content="Y4"/>
-                    <ComboBoxItem Content="Y5"/>
-                    <ComboBoxItem Content="Y6"/>
-                </ComboBox>
-
-                <ComboBox x:Name="DataSetPicker" SelectedIndex="0" IsEditable="False" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="25" Margin="0,10,0,10">
-                    <ComboBoxItem Content="Reading"/>
-                    <ComboBoxItem Content="Writing"/>
-                    <ComboBoxItem Content="Maths"/>
-                    <ComboBoxItem Content="EGPS"/>
-                </ComboBox>
-            </StackPanel>
-        </Grid>
-        
-        <Button x:Name="btnOK" Content="OK"             Width="75" Height="30" Grid.ColumnSpan="3" Margin="157,290,120,-108" Click="BtnOK_Click" />
-        <Button x:Name="btnCancel" Content="Cancel"     Width="75" Height="30" Grid.Column="2" Click="BtnCancel_Click" Margin="96,290,0,-108"/>
+            <Button x:Name="btnOK" Content="OK"             Width="75" Height="30" Click="BtnOK_Click" Margin="0, 20, 0, 0"/>
+            <Button x:Name="btnCancel" Content="Cancel"     Width="75" Height="30" Click="BtnCancel_Click" Margin="0, 20, 0, 0"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -4,23 +4,28 @@ namespace Excel_Converter
 {
     public partial class Popup : Window
     {
+        MainWindowDataContext context = new MainWindowDataContext();
+
         public Popup()
         {
             InitializeComponent();
+            DataContext = context;
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Hide();
         }
 
         private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
             var main = new MainWindow();
 
+            main.YearGroup = YGPicker.Text;
+
             main.ConvertData();
 
-            this.Close();
+            Hide();
         }
     }
 }
