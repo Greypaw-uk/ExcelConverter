@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="EMAG File Converter" Height="485.21" Width="800">
+
     <Grid>
         <Grid Height="Auto" Width="Auto" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
@@ -22,7 +23,7 @@
                     Margin="10,10,0,0" 
                     Height="24" 
                     Grid.ColumnSpan="2"/>
-            
+
             <Button x:Name="btnConvert" 
                     Content="Convert" 
                     Click="OpenPopup" 
@@ -33,7 +34,7 @@
                     Height="24" 
                     Grid.ColumnSpan="2" 
                     Grid.Column="1"/>
-            
+
             <Button x:Name="btnExportFile" 
                     Content="Export" 
                     Click="ExportToMag" 
@@ -44,6 +45,7 @@
                     Margin="70,10,0,0" 
                     Height="24" 
                     Grid.Column="2"/>
+
         </Grid>
 
         <DataGrid AutoGenerateColumns="False" 
@@ -51,7 +53,7 @@
                   Name="DataGridView1" 
                   Margin="10,49,10,10" 
                   Height="Auto" Width="Auto" 
-                  CanUserDeleteRows="False">
+                  CanUserDeleteRows="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Width="3*" Binding="{Binding pupilName}"/>
                 <DataGridTextColumn Header="Au 1" Width="1*" Binding="{Binding au1}"/>

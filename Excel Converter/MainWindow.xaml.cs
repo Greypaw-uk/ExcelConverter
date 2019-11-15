@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using Microsoft.Office.Interop.Excel;
+using Syroot.Windows.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,11 +62,8 @@ namespace Excel_Converter
                     Range range = (Range)(xlWorkSheet.UsedRange.Columns[1, Type.Missing]);
 
 
-                    // Inject headers into CSV file
-                    //xlWorkSheet.Rows["1:9"].Delete();
-
+                    // Inject headers into csv file
                     xlWorkSheet.Cells[1, 1] = "name";
-                    //xlWorkSheet.Rows["2:3"].Delete();
 
                     xlWorkSheet.Cells[1, 13] = "au1";
                     xlWorkSheet.Cells[1, 16] = "au2";
@@ -103,8 +101,8 @@ namespace Excel_Converter
                         xlApp = null;
                     }
 
-                    //Add pupil details into Observable Collection so it can be displayed
 
+                    //Add pupil details into Observable Collection so it can be displayed
                     try
                     {
                         using (var reader = new StreamReader(File.OpenRead(fileName)))
@@ -175,7 +173,9 @@ namespace Excel_Converter
                                 }
                             }
 
-                            // Split O'Track data into chunks to display back correct subject
+                            // This section was intended to break up the OTrack data into subjects.  
+                            // I didn't have time to finish it before leaving the company
+
                             var subjectPicker = popup.DataSetPicker.SelectedIndex;
                             var counter = 0;
                             var key = CSVFileContents[0].pupilName;
@@ -240,6 +240,7 @@ namespace Excel_Converter
                             {
                                 MessageBox.Show(error.Message);
                             }
+
                         }
                     }
                     catch
@@ -272,7 +273,7 @@ namespace Excel_Converter
 
             var DialogBox = new Microsoft.Win32.OpenFileDialog
             {
-                InitialDirectory = "C:\\Users\\John Scholey\\Downloads\\",
+                InitialDirectory = KnownFolders.Downloads.ToString(),
                 Filter = "xls file (*.xls)|*.xls",
                 FilterIndex = 2,
                 RestoreDirectory = true
@@ -295,8 +296,6 @@ namespace Excel_Converter
                     xlApp.DisplayAlerts = false;
 
                     xlWorkSheet = (Worksheet)xlApp.Worksheets.get_Item(1);
-
-
 
                     switch (YGValue)
                     {
@@ -399,7 +398,6 @@ namespace Excel_Converter
             {
                 MessageBox.Show("You cannot use this button twice.");
             }
-
         }
 
 
@@ -413,7 +411,6 @@ namespace Excel_Converter
                 if (!File.Exists(path))
                 {
                     // Create new blank dictionary.txt
-                    //TODO Populate newly created Dictionary File with sample values
                     StreamWriter txtFile = File.CreateText(path);
 
                     List<String> dictionaryList = new List<String>
@@ -447,7 +444,6 @@ namespace Excel_Converter
                     {
                         MessageBox.Show("The dictionary.txt file is missing and I couldn't create a new one.");
                     }
-
                 }
 
 
